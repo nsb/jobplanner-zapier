@@ -1,3 +1,21 @@
+// You'll want to set these with either `CLIENT_ID=abc zapier test` or `zapier env 1.0.0 CLIENT_ID abc`
+process.env.BASE_URL = process.env.BASE_URL || 'https://api.myjobplanner.com/o';
+process.env.CLIENT_ID = process.env.CLIENT_ID || '1234';
+process.env.CLIENT_SECRET = process.env.CLIENT_SECRET || 'asdf';
+
+const authentication = require('./authentication');
+
+// To include the Authorization header on all outbound requests, simply define a function here.
+// It runs runs before each request is sent out, allowing you to make tweaks to the request in a centralized spot
+const includeBearerToken = (request, z, bundle) => {
+  if (bundle.authData.access_token) {
+    request.headers.Authorization = `Bearer ${bundle.authData.access_token}`;
+  }
+  return request;
+};
+
+const business = require('./triggers/business');
+
 // We can roll up all our behaviors in an App.
 const App = {
   // This is just shorthand to reference the installed dependencies you have. Zapier will
@@ -5,8 +23,11 @@ const App = {
   version: require('./package.json').version,
   platformVersion: require('zapier-platform-core').version,
 
+  authentication: authentication,
+
   // beforeRequest & afterResponse are optional hooks into the provided HTTP client
   beforeRequest: [
+    includeBearerToken
   ],
 
   afterResponse: [
@@ -18,6 +39,7 @@ const App = {
 
   // If you want your trigger to show up, you better include it here!
   triggers: {
+    [business.key]: business
   },
 
   // If you want your searches to show up, you better include it here!
