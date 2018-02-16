@@ -1,7 +1,7 @@
 const redirectUri = 'https://zapier.com/dashboard/auth/oauth/return/App2578CLIAPI/';
 
 const getAccessToken = (z, bundle) => {
-  const promise = z.request(`${process.env.BASE_URL}/token/`, {
+  const promise = z.request(`${process.env.BASE_URL}/o/token/`, {
     method: 'POST',
     body: {
       code: bundle.inputData.code,
@@ -30,7 +30,7 @@ const getAccessToken = (z, bundle) => {
 };
 
 const refreshAccessToken = (z, bundle) => {
-  const promise = z.request(`${process.env.BASE_URL}/token/`, {
+  const promise = z.request(`${process.env.BASE_URL}/o/token/`, {
     method: 'POST',
     body: {
       refresh_token: bundle.authData.refresh_token,
@@ -61,14 +61,17 @@ const testAuth = (z /*, bundle*/) => {
   // Normally you want to make a request to an endpoint that is either specifically designed to test auth, or one that
   // every user will have access to, such as an account or profile endpoint like /me.
   const promise = z.request({
-    method: 'POST',
-    url: `${process.env.BASE_URL}/introspect/`,
+    method: 'GET',
+    url: `${process.env.BASE_URL}/users/me/`,
   });
 
   // This method can return any truthy value to indicate the credentials are valid.
   // Raise an error to show
   return promise.then((response) => {
     if (response.status === 401) {
+      throw new Error('The access token you supplied is not valid');
+    }
+    if (response.status === 403) {
       throw new Error('The access token you supplied is not valid');
     }
     return response;
@@ -82,7 +85,7 @@ module.exports = {
     // Zapier generates the state and redirect_uri, you are responsible for providing the rest.
     // Note: can also be a function that returns a string
     authorizeUrl: {
-      url: `${process.env.BASE_URL}/authorize/`,
+      url: `${process.env.BASE_URL}/o/authorize/`,
       params: {
         client_id: '{{process.env.CLIENT_ID}}',
         state: '{{bundle.inputData.state}}',

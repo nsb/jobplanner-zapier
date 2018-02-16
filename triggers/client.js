@@ -1,25 +1,33 @@
 const subscribeHook = (z, bundle) => {
   // `z.console.log()` is similar to `console.log()`.
-  z.console.log('console says hello world!');
+  z.console.log('subscribehook', bundle.targetUrl, bundle.inputData.business);
 
   // bundle.targetUrl has the Hook URL this app should call when a client is created.
   const data = {
-    url: bundle.targetUrl,
-    // TODO: add business here,
-    business: bundle.inputData.business
+    target: bundle.targetUrl,
+    business: bundle.inputData.business,
+    event: 'client.added',
+    is_active: true
   };
 
   // You can build requests and our client will helpfully inject all the variables
   // you need to complete. You can also register middleware to control this.
   const options = {
-    url: 'https://api.myjobplanner.com/hooks/',
+    url: 'https://api.myjobplanner.com/webhooks/',
     method: 'POST',
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json'
+    }
   };
 
   // You may return a promise or a normal data structure from any perform method.
   return z.request(options)
-    .then((response) => JSON.parse(response.content));
+    .then((response) => {
+      z.console.log(response.content)
+      JSON.parse(response.content)
+    })
+    .catch((error) => z.console.log(error));
 };
 
 const unsubscribeHook = (z, bundle) => {
@@ -30,7 +38,7 @@ const unsubscribeHook = (z, bundle) => {
   // You can build requests and our client will helpfully inject all the variables
   // you need to complete. You can also register middleware to control this.
   const options = {
-    url: `https://api.myjobplanner.com/hooks/${hookId}/`,
+    url: `https://api.myjobplanner.com/webhooks/${hookId}/`,
     method: 'DELETE',
   };
 
