@@ -95,7 +95,13 @@ module.exports = {
     // `inputFields` can define the fields a user could provide,
     // we'll pass them in as `bundle.inputData` later.
     inputFields: [
-      {key: 'business', type: 'number', helpText: 'Which business this should trigger on.'}
+      {
+         key: 'business',
+         required: true,
+         label: 'Business',
+         dynamic: 'business.id.name',
+         helpText: 'Which business this should trigger on.'
+      },
     ],
 
     type: 'hook',
