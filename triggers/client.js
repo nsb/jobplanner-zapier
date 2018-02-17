@@ -60,7 +60,7 @@ const getClient = (z, bundle) => {
   // };
   //
   // return [recipe];
-  return bundle.cleanedRequest
+  return [bundle.cleanedRequest.data]
 };
 
 const getFallbackRealClient = (z, bundle) => {
