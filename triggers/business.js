@@ -1,5 +1,5 @@
 const listBusinesses = (z, bundle) => {
-  const promise = z.request('https://api.myjobplanner.com/businesses/');
+  const promise = z.request('https://api.myjobplanner.com/v1/businesses/');
   return promise.then((response) => JSON.parse(response.content).results);
 };
 
