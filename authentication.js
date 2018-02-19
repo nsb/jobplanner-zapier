@@ -62,7 +62,7 @@ const testAuth = (z /*, bundle*/) => {
   // every user will have access to, such as an account or profile endpoint like /me.
   const promise = z.request({
     method: 'GET',
-    url: `${process.env.BASE_URL}/users/me/`,
+    url: `${process.env.BASE_URL}/${process.env.API_VERSION}/users/me/`,
   });
 
   // This method can return any truthy value to indicate the credentials are valid.

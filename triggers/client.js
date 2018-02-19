@@ -13,7 +13,7 @@ const subscribeHook = (z, bundle) => {
   // You can build requests and our client will helpfully inject all the variables
   // you need to complete. You can also register middleware to control this.
   const options = {
-    url: 'https://api.myjobplanner.com/v1/webhooks/',
+    url: `${process.env.BASE_URL}/${process.env.API_VERSION}/webhooks/`,
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
@@ -38,7 +38,7 @@ const unsubscribeHook = (z, bundle) => {
   // You can build requests and our client will helpfully inject all the variables
   // you need to complete. You can also register middleware to control this.
   const options = {
-    url: `https://api.myjobplanner.com/v1/webhooks/${hookId}/`,
+    url: `${process.env.BASE_URL}/${process.env.API_VERSION}/webhooks/${hookId}/`,
     method: 'DELETE',
   };
 
@@ -66,7 +66,7 @@ const getClient = (z, bundle) => {
 const getFallbackRealClient = (z, bundle) => {
   // For the test poll, you should get some real data, to aid the setup process.
   const options = {
-    url: 'https://api.myjobplanner.com/v1/clients/',
+    url: `${process.env.BASE_URL}/${process.env.API_VERSION}/clients/`,
     params: {
       business: bundle.inputData.business
     }
