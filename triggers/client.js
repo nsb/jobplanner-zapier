@@ -24,7 +24,6 @@ const subscribeHook = (z, bundle) => {
   // You may return a promise or a normal data structure from any perform method.
   return z.request(options)
     .then((response) => {
-      z.console.log(response.content)
       JSON.parse(response.content)
     })
     .catch((error) => z.console.log(error));
