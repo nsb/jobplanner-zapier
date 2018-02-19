@@ -116,11 +116,21 @@ module.exports = {
     // returned records, and have obviously dummy values that we can show to any user.
     sample: {
       id: 1,
-      createdAt: 1472069465,
+      business: 1,
       first_name: 'Donald',
       last_name: 'Trump',
       email: 'donald@whitehouse.gov',
-      business: 1,
+      phone: '12341234',
+      notes: 'this is a note',
+      properties: [{
+        "id": 1,
+        "address1": "1600 Pensylvania Ave",
+        "address2": "",
+        "city": "Washington",
+        "zip_code": "1234",
+        "country": "USA"
+      }],
+      upcoming_visit_reminder_email_enabled: true
     },
 
     // If the resource can have fields that are custom on a per-user basis, define a function to fetch the custom
@@ -136,6 +146,7 @@ module.exports = {
       {key: 'email', label: 'Email'},
       {key: 'phone', label: 'Phone'},
       {key: 'notes', label: 'Notes'},
+      {key: 'properties', label: 'Properties'},
       {key: 'upcoming_visit_reminder_email_enabled', label: 'Email reminder enabled'}
     ]
   }
