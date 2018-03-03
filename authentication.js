@@ -107,5 +107,10 @@ module.exports = {
   },
   // The test method allows Zapier to verify that the access token is valid. We'll execute this
   // method after the OAuth flow is complete to ensure everything is setup properly.
-  test: testAuth
+  test: testAuth,
+  connectionLabel: (z, bundle) => {
+    // Can also be a string, check basic auth above for an example
+    // bundle.inputData has whatever comes back from the .test function/request, assuming it returns a JSON object
+    return bundle.inputData.username;
+  }
 };
