@@ -13,7 +13,7 @@ const subscribeHook = (z, bundle) => {
   // You can build requests and our client will helpfully inject all the variables
   // you need to complete. You can also register middleware to control this.
   const options = {
-    url: `${process.env.BASE_URL}/${process.env.API_VERSION}/webhooks/`,
+    url: `${process.env.BASE_URL}/${process.env.API_VERSION}/hooks/`,
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
@@ -37,7 +37,7 @@ const unsubscribeHook = (z, bundle) => {
   // You can build requests and our client will helpfully inject all the variables
   // you need to complete. You can also register middleware to control this.
   const options = {
-    url: `${process.env.BASE_URL}/${process.env.API_VERSION}/webhooks/${hookId}/`,
+    url: `${process.env.BASE_URL}/${process.env.API_VERSION}/hooks/${hookId}/`,
     method: 'DELETE',
   };
 
