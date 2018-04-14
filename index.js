@@ -17,6 +17,7 @@ const includeBearerToken = (request, z, bundle) => {
 
 const business = require('./triggers/business');
 const client = require('./triggers/client');
+const invoice = require('./triggers/invoice');
 
 // We can roll up all our behaviors in an App.
 const App = {
@@ -42,7 +43,8 @@ const App = {
   // If you want your trigger to show up, you better include it here!
   triggers: {
     [business.key]: business,
-    [client.key]: client
+    [client.key]: client,
+    [invoice.key]: invoice
   },
 
   // If you want your searches to show up, you better include it here!
